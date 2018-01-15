@@ -1,0 +1,5 @@
+[requires]
+asio-utility/master@enhex/stable
+
+[generators]
+cmake
