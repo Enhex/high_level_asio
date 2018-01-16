@@ -34,6 +34,7 @@ endfunction(add_test)
 add_test(string)
 add_test(file)
 add_test(server)
+add_test(threads)
 
 
 # startup project
