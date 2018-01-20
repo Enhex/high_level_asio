@@ -8,9 +8,11 @@
 
 #include <asio.hpp>
 #include <fstream>
+#include <iostream>
 #include <vector>
 
 // write a file using size tag
+//TODO file size template parameter
 template<typename SyncWriteStream>
 void write_file(SyncWriteStream& stream, const std::string& path)
 {
@@ -25,7 +27,7 @@ void write_file(SyncWriteStream& stream, const std::string& path)
 	if (content_size > std::numeric_limits<uint32_t>::max()) {
 		throw std::length_error("File size too big to be represented by uint32_t.");
 	}
-	const uint32_t file_size = content_size;
+	const auto file_size = uint32_t(content_size);
 
 	asio::error_code error;
 	
