@@ -1,0 +1,8 @@
+asio-utility TODO
+=================
+
+- connection class
+	- detects node disconnection when writing
+	- provides reusable buffer for async reading
+
+- check if `ASIO_STANDALONE` is defined for using the boost namespace or not
