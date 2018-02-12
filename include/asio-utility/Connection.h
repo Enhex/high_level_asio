@@ -2,6 +2,7 @@
 
 #include <asio.hpp>
 #include <vector>
+#include <asio-utility/string.h>
 
 struct Connection
 {
@@ -18,13 +19,37 @@ struct Connection
 	asio::ip::tcp::socket socket;
 
 	// reusable buffer
-	std::vector<std::byte> read_buffer;
+	asio::streambuf read_buffer;
 
-
-	// prepare the fixed buffer for reading
-	std::vector<std::byte>& prepare_buffer(size_t size)
+	// directly reads the type's bytes
+	//TODO use enable_if
+	template<typename T>
+	void read(T& value)
 	{
-		read_buffer.resize(size);
-		return read_buffer;
+		constexpr auto t_size = sizeof(T);
+		read_buffer.commit(t_size);
+
+		auto buffers = read_buffer.data();
+		auto buffers_iter = asio::buffers_begin(buffers);
+
+		for (auto i = 0; i < t_size; ++i) {
+			reinterpret_cast<std::array<std::byte, t_size>&>(value)[i] = static_cast<std::byte>(*buffers_iter);
+			++buffers_iter;
+		}
+
+		read_buffer.consume(t_size);
+	}
+
+	template<typename T>
+	T read()
+	{
+		T value;
+		read(value);
+		return value;
+	}
+
+	std::string read_string()
+	{
+		return ::read_string(socket, read_buffer);
 	}
 };
