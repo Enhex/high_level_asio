@@ -6,7 +6,7 @@
 - read_until overloads
 */
 
-#include <asio.hpp>
+#include "hla/include_asio.h"
 #include <string>
 
 // write a std::string as a null-terminated string

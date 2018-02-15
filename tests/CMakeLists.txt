@@ -10,7 +10,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(${CMAKE_CURRENT_BINARY_DIR}/conanbuildinfo.cmake)
 
-project(asio_utility_tests)
+project(HLA_tests)
 conan_basic_setup()
 
 

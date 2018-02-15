@@ -1,6 +1,6 @@
 #pragma once
 
-#include <asio.hpp>
+#include "hla/include_asio.h"
 #include <thread>
 #include <vector>
 

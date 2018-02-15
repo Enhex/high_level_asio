@@ -1,6 +1,6 @@
 cd ..
-mkdir asio-utility-tests-build
-cd asio-utility-tests-build
+mkdir high_level_asio-tests-build
+cd high_level_asio-tests-build
 
-conan install ../asio-utility/tests
-cmake ../asio-utility/tests -G "Visual Studio 15 Win64"
+conan install ../high_level_asio/tests
+cmake ../high_level_asio/tests -G "Visual Studio 15 Win64"

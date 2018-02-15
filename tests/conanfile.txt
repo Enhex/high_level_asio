@@ -1,5 +1,5 @@
 [requires]
-asio-utility/master@enhex/stable
+high_level_asio/master@enhex/stable
 
 [generators]
 cmake

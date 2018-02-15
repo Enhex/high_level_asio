@@ -1,6 +1,6 @@
 #pragma once
 
-#include <asio.hpp>
+#include "hla/include_asio.h"
 
 // accept connections on a given port with a callback
 struct Server
