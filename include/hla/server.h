@@ -19,7 +19,7 @@ namespace hla
 		tcp::socket socket;
 
 		// accept one new connection at a time asynchronously
-		//NOTE: move the socket in OnAccept to control its lifetime
+		//NOTE: move the socket in OnAccept to control its life-time
 		template<typename OnAccept>
 		void accept(OnAccept&& on_accept)
 		{
@@ -29,7 +29,5 @@ namespace hla
 				accept(std::move(on_accept));
 			});
 		}
-
-		//TODO accept overload that allows socket reuse?
 	};
 }
