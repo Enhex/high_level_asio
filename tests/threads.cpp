@@ -14,6 +14,6 @@ int main()
 		});
 	}
 
-	auto threads = thread_pool_run(context);
-	join_threads(threads);
+	auto threads = hla::thread_pool_run(context);
+	hla::join_threads(threads);
 }

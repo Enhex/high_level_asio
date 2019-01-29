@@ -1,4 +1,4 @@
-#include <hla/Server.h>
+#include <hla/server.h>
 #include <iostream>
 #include <future>
 
@@ -12,9 +12,9 @@ int main()
 	int connections = num_connections;
 
 	asio::io_context context;
-	auto server = Server(context, port);
+	auto server = hla::server(context, port);
 
-	server.accept([&](tcp::socket socket)
+	server.accept([&](tcp::socket& socket)
 	{
 		std::cout << "accepted connection." << '\n';
 		if (--connections == 0)

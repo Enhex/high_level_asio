@@ -1,6 +1,7 @@
+#include <future>
+#include <hla/connection.h>
 #include <hla/string.h>
 #include <iostream>
-#include <future>
 
 using asio::ip::tcp;
 
@@ -19,15 +20,17 @@ int main()
 
 		acceptor.async_accept(socket, [&](std::error_code ec)
 		{
+			hla::connection socket_con(std::move(socket));
+
 			const std::string str = "hello ";
 			write_string(connect_socket, str);
 
-			auto str1 = read_string(socket);
+			auto str1 = socket_con.read_string();
 			std::cout << str1 << '\n';
 
 			write_string(connect_socket, "world!");
 
-			auto str2 = read_string(socket);
+			auto str2 = socket_con.read_string();
 			std::cout << str2 << '\n';
 		});
 

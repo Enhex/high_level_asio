@@ -8,7 +8,7 @@ constexpr unsigned short port = 27000;
 
 void on_accept(tcp::socket& socket)
 {
-	auto content = read_file(socket);
+	auto content = hla::read_file(socket);
 	std::cout << std::string(content.begin(), content.end()) << '\n';
 }
 
@@ -35,6 +35,6 @@ int main()
 			os << "hello world!";
 		}
 
-		write_file(socket, "test.txt");
+		hla::write_file(socket, "test.txt");
 	}
 }
