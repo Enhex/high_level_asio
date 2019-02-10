@@ -24,7 +24,7 @@ namespace hla
 		void accept(OnAccept&& on_accept)
 		{
 			socket = tcp::socket(acceptor.get_io_context()); // create a new socket in case the last one was moved
-			acceptor.async_accept(socket, [&, on_accept = std::move(on_accept)](std::error_code /*ec*/) {
+			acceptor.async_accept(socket, [&, on_accept = std::move(on_accept)](hla::error_code /*ec*/) {
 				on_accept(socket);
 				accept(std::move(on_accept));
 			});

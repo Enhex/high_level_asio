@@ -31,7 +31,7 @@ namespace hla
 		}
 		const auto file_size = uint32_t(content_size);
 
-		asio::error_code error;
+		hla::error_code error;
 
 		// write file size
 		asio::write(stream, asio::buffer(&file_size, sizeof(file_size)), error);
@@ -48,7 +48,7 @@ namespace hla
 	template<typename SyncReadStream>
 	std::vector<std::byte> read_file(SyncReadStream& stream)
 	{
-		asio::error_code error;
+		hla::error_code error;
 
 		// read file size
 		uint32_t file_size = 0;
