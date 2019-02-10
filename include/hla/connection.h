@@ -23,6 +23,11 @@ namespace hla
 		// reusable buffer
 		asio::streambuf read_buffer;
 
+		void connect(const char* address, uint16_t port)
+		{
+			socket.connect(asio::ip::tcp::endpoint(asio::ip::make_address(address), port));
+		}
+
 		// directly reads the type's bytes
 		//TODO use enable_if
 		template<typename T>
