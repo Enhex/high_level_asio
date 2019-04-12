@@ -29,3 +29,11 @@ std::string read_string(SyncReadStream& stream, asio::streambuf& sb)
 		asio::buffers_begin(bufs),
 		asio::buffers_begin(bufs) + str_size);
 }
+
+// simplified version without reusable asio::streambuf
+template<typename SyncReadStream>
+std::string read_string(SyncReadStream& stream)
+{
+	asio::streambuf sb;
+	return read_string(stream, sb);
+}
