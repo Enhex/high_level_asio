@@ -10,11 +10,13 @@ namespace hla
 		using tcp = asio::ip::tcp;
 
 		server(asio::io_context& context, uint16_t port) :
+			context(context),
 			acceptor(context, tcp::endpoint(asio::ip::tcp::v4(), port)),
 			socket(context)
 		{
 		}
 
+		asio::io_context& context;
 		asio::ip::tcp::acceptor acceptor;
 		tcp::socket socket;
 
@@ -23,7 +25,7 @@ namespace hla
 		template<typename OnAccept>
 		void accept(OnAccept&& on_accept)
 		{
-			socket = tcp::socket(acceptor.get_io_context()); // create a new socket in case the last one was moved
+			socket = tcp::socket(context); // create a new socket in case the last one was moved
 			acceptor.async_accept(socket, [&, on_accept = std::move(on_accept)](hla::error_code /*ec*/) {
 				on_accept(socket);
 				accept(std::move(on_accept));

@@ -8,7 +8,8 @@ constexpr unsigned short port = 27000;
 
 void on_accept(tcp::socket& socket)
 {
-	auto content = hla::read_file(socket);
+	auto content_byte = hla::read_file(socket);
+	auto& content = reinterpret_cast<std::vector<char>&>(content_byte);
 	std::cout << std::string(content.begin(), content.end()) << '\n';
 }
 
