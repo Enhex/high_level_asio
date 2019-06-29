@@ -10,7 +10,7 @@ namespace hla
 	const auto localhost_v4 = asio::ip::address_v4(localhost_v4_bytes);
 
 
-	void connect(asio::ip::tcp::socket& socket, const char* address, uint16_t port)
+	inline void connect(asio::ip::tcp::socket& socket, const char* address, uint16_t port)
 	{
 		socket.connect(asio::ip::tcp::endpoint(asio::ip::make_address(address), port));
 	}
