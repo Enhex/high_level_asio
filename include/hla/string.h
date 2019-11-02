@@ -31,6 +31,7 @@ std::string read_string(SyncReadStream& stream, asio::streambuf& sb)
 }
 
 // simplified version without reusable asio::streambuf
+//WARNING: asio::streambuf may read beyond the null delimiter and discard the extra data!
 template<typename SyncReadStream>
 std::string read_string(SyncReadStream& stream)
 {

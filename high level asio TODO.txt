@@ -1,6 +1,10 @@
 asio-utility TODO
 =================
 
+- string must be used with a streambuf that's bound to a socket
+	- use read_until \0 only with a hla::connection
+	- use raw socket only with size instead of delimiter
+
 -integer writing template
 
 - connection class
