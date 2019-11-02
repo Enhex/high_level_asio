@@ -1,5 +1,5 @@
 [requires]
-high_level_asio/master@enhex/stable
+asio/1.13.0@bincrafters/stable
 
 [generators]
-cmake
+premake
