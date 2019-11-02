@@ -15,23 +15,25 @@ int main()
 
 		tcp::acceptor acceptor(context, tcp::endpoint(tcp::v4(), port));
 
-		tcp::socket socket(context);
-		tcp::socket connect_socket(context);
+		asio::ip::tcp::socket client_socket(context);
+		hla::connection connection(context); // server side connection
 
-		acceptor.async_accept(socket, [&](std::error_code ec)
+		acceptor.async_accept(connection.socket, [&](std::error_code ec)
 		{
-			hla::connection socket_con(std::move(socket));
 
-			const std::string str = "hello ";
-			write_string(connect_socket, str);
+			{
+				write_string(client_socket, "hello ");
 
-			auto str1 = socket_con.read_string();
-			std::cout << str1 << '\n';
+				auto read_str = read_string(connection.socket);
+				std::cout << read_str << '\n';
+			}
+			{
+				const std::string str = "world!";
+				write_null_string(client_socket, str);
 
-			write_string(connect_socket, "world!");
-
-			auto str2 = socket_con.read_string();
-			std::cout << str2 << '\n';
+				auto read_str = connection.read_null_string();
+				std::cout << read_str << '\n';
+			}
 		});
 
 
@@ -40,7 +42,9 @@ int main()
 		std::puts("writing string...");
 
 		const auto endpoint = tcp::endpoint(asio::ip::address_v4({ 127,0,0,1 }), port);
-		connect_socket.connect(endpoint);
+		client_socket.connect(endpoint);
+
+		fut1.wait();
 	}
 	catch (std::exception& e)
 	{

@@ -55,9 +55,16 @@ namespace hla
 			return value;
 		}
 
-		std::string read_string()
+		// read null-teriminated string
+		std::string read_null_string()
 		{
-			return ::read_string(socket, read_buffer);
+			asio::streambuf read_buffer;
+			const auto str_size = asio::read_until(socket, read_buffer, '\0') - 1;
+			const auto bufs = read_buffer.data();
+			read_buffer.consume(str_size + 1);
+			return std::string(
+				asio::buffers_begin(bufs),
+				asio::buffers_begin(bufs) + str_size);
 		}
 	};
 }
