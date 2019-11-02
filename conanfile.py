@@ -17,7 +17,7 @@ class HighlevelasioConan(ConanFile):
 		if self.options.asio_standalone:
 			self.requires("asio/1.13.0@bincrafters/stable")
 		else:
-			self.requires("boost/1.70.0@conan/stable")
+			self.requires("boost/1.71.0@conan/stable")
 	
 	def package(self):
 		self.copy("*.h")
