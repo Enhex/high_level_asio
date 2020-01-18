@@ -1,5 +1,5 @@
 [requires]
-asio/1.13.0@bincrafters/stable
+asio/1.13.0
 
 [generators]
 premake
