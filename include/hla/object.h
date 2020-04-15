@@ -6,7 +6,6 @@
 */
 
 #include "hla/include_asio.h"
-#include <string>
 
 // write a given object's memory layout bytes
 template<typename SyncWriteStream, typename T>

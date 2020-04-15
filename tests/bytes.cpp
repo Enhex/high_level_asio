@@ -20,25 +20,21 @@ int main()
 
 		acceptor.async_accept(connection.socket, [&](std::error_code ec)
 		{
-			{
-				write_string(client_socket, "hello ");
+			using type = std::array<unsigned char, 4>;
+			type a{1,2,3,4};
+			write_bytes(client_socket, a);
 
-				auto read_str = read_string(connection.socket);
-				std::cout << read_str << '\n';
+			type b;
+			read_bytes(connection.socket, b);
+			
+			for (auto e : b) {
+				std::cout << (int)e << ',';
 			}
-			{
-				const std::string str = "world!";
-				write_null_string(client_socket, str);
 
-				auto read_str = connection.read_null_string();
-				std::cout << read_str << '\n';
-			}
+			assert(a == b);
 		});
 
-
 		auto fut1 = std::async([&context] { context.run(); });
-
-		std::puts("writing string...");
 
 		const auto endpoint = tcp::endpoint(asio::ip::address_v4({ 127,0,0,1 }), port);
 		client_socket.connect(endpoint);
