@@ -32,7 +32,7 @@ function add_test(name)
 		}
 
 		flags{"MultiProcessorCompile"}
-        
+
         warnings "Extra"
 
         filter "toolset:msc"
