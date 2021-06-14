@@ -4,14 +4,23 @@
 
 namespace hla
 {
-	// accept connections on a given port with a callback
+	// accept TCP connections on a given port with a callback
 	struct server
 	{
 		using tcp = asio::ip::tcp;
 
+		// default to IPv6
 		server(asio::io_context& context, uint16_t port) :
 			context(context),
-			acceptor(context, tcp::endpoint(asio::ip::tcp::v4(), port)),
+			acceptor(context, tcp::endpoint(asio::ip::tcp::v6(), port)),
+			socket(context)
+		{
+		}
+
+		// custom endpoint
+		server(asio::io_context& context, tcp::endpoint const& endpoint) :
+			context(context),
+			acceptor(context, endpoint),
 			socket(context)
 		{
 		}
