@@ -26,7 +26,7 @@ int main()
 
 			type b;
 			read_bytes(connection.socket, b);
-			
+
 			for (auto e : b) {
 				std::cout << (int)e << ',';
 			}
