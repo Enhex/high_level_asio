@@ -14,6 +14,12 @@ void write_bytes(SyncWriteStream& stream, const T& value)
 	asio::write(stream, asio::buffer(&value, sizeof(value)));
 }
 
+template<typename SyncWriteStream, typename T>
+void write_bytes(SyncWriteStream& stream, const T& value, hla::error_code& ec)
+{
+	asio::write(stream, asio::buffer(&value, sizeof(value)), ec);
+}
+
 
 // read a given object's memory layout bytes
 template<typename SyncReadStream, typename T>
