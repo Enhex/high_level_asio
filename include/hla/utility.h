@@ -28,7 +28,7 @@ namespace hla
 			});
 		}
 
-		return std::move(threads);
+		return threads;
 	}
 
 	// create threads according to the number of available cores and call asio::io_context::run() in them
