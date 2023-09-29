@@ -1,5 +1,5 @@
 [requires]
-asio/1.28.0
+asio/1.28.1
 
 [generators]
 premake
