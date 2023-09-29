@@ -1,6 +1,6 @@
 #include <future>
 #include <hla/connection.h>
-#include <hla/string.h>
+#include <hla/object.h>
 #include <iostream>
 
 using asio::ip::tcp;
@@ -20,18 +20,33 @@ int main()
 
 		acceptor.async_accept(connection.socket, [&](std::error_code ec)
 		{
-			using type = std::array<unsigned char, 4>;
-			type a{1,2,3,4};
-			write_bytes(client_socket, a);
+			{
+				using type = std::array<unsigned char, 4>;
+				type a{1,2,3,4};
+				write_bytes(client_socket, a);
 
-			type b;
-			read_bytes(connection.socket, b);
+				type b;
+				read_bytes(connection.socket, b);
 
-			for (auto e : b) {
-				std::cout << (int)e << ',';
+				for (auto e : b) {
+					std::cout << (int)e << ',';
+				}
+
+				assert(a == b);
 			}
+			{
+				using type = std::vector<int>;
+				type a{5,6,7,8,9};
+				write_sequence(client_socket, a);
 
-			assert(a == b);
+				auto b = read_sequence<type>(connection.socket);
+
+				for (auto e : b) {
+					std::cout << e << ',';
+				}
+
+				assert(a == b);
+			}
 		});
 
 		auto fut1 = std::async([&context] { context.run(); });

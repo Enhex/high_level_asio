@@ -35,3 +35,25 @@ T read_bytes(SyncReadStream& stream)
 	read_bytes(stream, value);
 	return value;
 }
+
+
+// write variable length sequence of bytes
+template<typename SyncWriteStream, typename T, typename Size = typename T::size_type>
+void write_sequence(SyncWriteStream& stream, T const& seq)
+{
+	write_bytes(stream, static_cast<Size>(seq.size()));
+	asio::write(stream, asio::buffer(seq.data(), sizeof(typename T::value_type) * seq.size()));
+}
+
+//NOTE: sequence type T must have resize() data() and size() member functions
+template<typename T, typename Size = typename T::size_type, typename SyncReadStream>
+T read_sequence(SyncReadStream& stream)
+{
+	T seq;
+
+	auto size = read_bytes<Size>(stream);
+	seq.resize(size);
+	asio::read(stream, asio::buffer(seq.data(), sizeof(typename T::value_type) * seq.size()));
+
+	return seq;
+}
