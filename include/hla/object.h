@@ -36,6 +36,23 @@ T read_bytes(SyncReadStream& stream)
 	return value;
 }
 
+template<typename T>
+auto get_buffer(T& value)
+{
+	return asio::buffer(&value, sizeof(value));
+}
+
+//NOTE: make sure value outlives callback
+template<typename T, typename SyncReadStream>
+void async_read_bytes(SyncReadStream& stream, T& buffer, std::function<void()> callback)
+{
+	asio::async_read(stream, buffer,
+		[callback](hla::error_code const& ec, std::size_t bytes_transferred)
+	{
+		callback();
+	});
+}
+
 
 // write variable length sequence of bytes
 template<typename SyncWriteStream, typename T, typename Size = typename T::size_type>

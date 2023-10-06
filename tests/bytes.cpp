@@ -18,6 +18,9 @@ int main()
 		asio::ip::tcp::socket client_socket(context);
 		hla::connection connection(context); // server side connection
 
+		std::array<unsigned char, 4> async_b;
+		auto async_b_buffer = get_buffer(async_b);
+
 		acceptor.async_accept(connection.socket, [&](std::error_code ec)
 		{
 			{
@@ -33,6 +36,20 @@ int main()
 				}
 
 				assert(a == b);
+			}
+			{
+				using type = std::array<unsigned char, 4>;
+				type a{1,2,3,4};
+				write_bytes(client_socket, a);
+
+				async_read_bytes(connection.socket, async_b_buffer, [a, &async_b]{
+					std::puts("\nasync:");
+					for(auto e : async_b){
+						std::cout << (int)e << ',';
+					}
+
+					assert(a == async_b);
+				});
 			}
 			{
 				using type = std::vector<int>;
